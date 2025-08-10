@@ -186,4 +186,4 @@ Now, we can easily assign arbitrary timesteps $t$ "event ids". Let's visualize a
 
 ### Acknowledgements
 
-A huge thanks to the [**UNITES**](www.google.com) group at UNC Chapel Hill for lending valuable computing resources to this project.
+A huge thanks to the [**UNITES**](https://tianlong-chen.github.io/index.html#lab) group at UNC Chapel Hill for lending valuable computing resources to this project.
