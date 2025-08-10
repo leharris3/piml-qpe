@@ -159,7 +159,13 @@ Now let's plot a histogram to show the distribution of samples by time.
 
 ##### Synthetic rain 'event' construction
 
-Recall, so far we've only collected a corpus of days (i.e., 24H) periods for which at least *some* rainfall occured. But real-life rainfall events can occur over multiple days, and may only last a few hours at a time. Therefore, we'll need to stich together our data into one, continous timeseries. Next, we'll segment this timeseries into individual rainfall events for *event-driven* analysis.
+Recall that so far we've only collected a corpus of *days* (i.e., 24H) periods for which at least *some* rainfall occured. But, actual rainfall events can occur over multiple days, and may only last a few hours at a time. Therefore, we'll need to stich together our dataset into one, continous timeseries. Next, we'll segment this timeseries into individual rainfall "events" for further analysis. The bulk of this work is performed by the `segment_rainfall_events` function in our notebook. 
+
+At a high-level, we classify a unique, rainfall event as a contigous block of time during which it is raining in the Las Vegas valley, and it hasn't stopped raining. 
+
+Now, let's be a little more formal. Let $r_i \in \mathcal{R}$  be a rain gauge in the set of all unique gauges $\mathcal{R}$ where $i \in \{0, 1, ..., 223 - 1\}$, and $r_{i, t}$ be the value in inches recorded by a rain gauge at a timestep $t \in \{ 0, 1, ..., n - 1\}$ where $n$ is total number of unique timesteps in our dataset. Moreover, let $m_{i, t}$ be the corresponding *MRMS* 1H-QPE in inches at a rain gauge $r_i$ at timestep $t$. 
+
+Furthermore, let $\epsilon = p_{50}(\forall_{t}\sum_{i}r_{i, t}) \approx 0.145$ be the threshold we choose to trigger a rainfall "event".
 
 ##### Training a random forest model
 
@@ -167,4 +173,4 @@ Recall, so far we've only collected a corpus of days (i.e., 24H) periods for whi
 
 ### Acknowledgements
 
-A huge thanks to the **UNITES** group at UNC Chapel Hill for lending valuable computing resources to this project.
+A huge thanks to the [**UNITES**](www.google.com) group at UNC Chapel Hill for lending valuable computing resources to this project.
