@@ -134,6 +134,29 @@ Where `ccrfcd_gauge_deltas_*.csv` files contain aligned MRMS/CCRFCD data.
 
 > *You can follow along with the following sections in the `analysis.ipynb` notebook.*
 
+In the first few cells we install necessary packages, import a few libraries, and declare a couple constants to use later on. Once we've loaded our dataset `.csv`  file into a `pandas.DataFrame`, we can take a look with the `df.head()` command.
+
+| start_time | end_time | station_id | lat | lon | gauge_qpe | mrms_qpe | delta_qpe |
+| :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
+| 2021-01-23 23:00:00 | 2021-01-24 00:00:00 | 4709 | 35.925000 | 245.244.883000 | 0.0 | 0.003937 | -0.003937 |
+| ... | ... | ... | ... | ... | ... | ... | ... |
+
+The format of this dataframe is indetical to other shown above, with the addition of the `delta_qpe` column, computed simply as `gauge_qpe`$-$`mrms_qpe`. This huge dataset contains every day we've collected data for sorted in chronological order. Let's take at how much data we have.
+
+```python
+print(f"# Data points: {len(df)}")
+print(f"# Unique gauges: {len(set(df['station_id']))}")
+```
+
+```bash
+# Data points: 2337407
+# Unique gauges: 223
+```
+
+Now let's plot a histogram to show the distribution of samples by time.
+
+![](assets/dps_vs_date.png)
+
 ##### Synthetic rain 'event' construction
 
 Recall, so far we've only collected a corpus of days (i.e., 24H) periods for which at least *some* rainfall occured. But real-life rainfall events can occur over multiple days, and may only last a few hours at a time. Therefore, we'll need to stich together our data into one, continous timeseries. Next, we'll segment this timeseries into individual rainfall events for *event-driven* analysis.
