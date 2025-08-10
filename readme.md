@@ -128,7 +128,13 @@ YYYY-MM-DD HH:MM:SS
 - ccrfcd_gauge_deltas_YYYY-MM-DD HH:MM:SS.csv
 ```
 
+Where `ccrfcd_gauge_deltas_*.csv` files contain aligned MRMS/CCRFCD data.
+
 ### Methodology
+
+> *Follow along with the subsequent sections in the `analysis.ipynb` notebook.*
+
+
 
 ### Conclusions
 
