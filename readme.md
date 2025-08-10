@@ -163,9 +163,22 @@ Recall that so far we've only collected a corpus of *days* (i.e., 24H) periods f
 
 At a high-level, we classify a unique, rainfall event as a contigous block of time during which it is raining in the Las Vegas valley, and it hasn't stopped raining. 
 
-Now, let's be a little more formal. Let $r_i \in \mathcal{R}$  be a rain gauge in the set of all unique gauges $\mathcal{R}$ where $i \in \{0, 1, ..., 223 - 1\}$, and $r_{i, t}$ be the value in inches recorded by a rain gauge at a timestep $t \in \{ 0, 1, ..., n - 1\}$ where $n$ is total number of unique timesteps in our dataset. Moreover, let $m_{i, t}$ be the corresponding *MRMS* 1H-QPE in inches at a rain gauge $r_i$ at timestep $t$. 
+Now, let's be a little more formal. Let $r_i \in \mathcal{R}$  be a rain gauge in the set of all unique gauges $\mathcal{R}$ where $i \in \{0, 1, ..., 223 - 1\}$, and $r_{i, t}$ be the value in inches recorded by a rain gauge at a timestep $t \in \{0, 1, ..., n - 1\}$ where $n$ is total number of unique timesteps in our dataset. Moreover, let $m_{i, t}$ be the corresponding *MRMS* 1H-QPE in inches at a rain gauge $r_i$ at timestep $t$. 
 
-Furthermore, let $\epsilon = p_{50}(\forall_{t}\sum_{i}r_{i, t}) \approx 0.145$ be the threshold we choose to trigger a rainfall "event".
+Furthermore, let $\epsilon = Q_{50}(\forall_{t}\sum_{i}m_{i, t}) \approx 0.145$ be the decision point we choose to toggle a rainfall "event"; the 50th percentile of the sum of MRMS 1H-QPE values at a timestep $t$. Next, for all timesteps $t$, we classify $t$ to be
+
+$$ 
+\left\{
+\begin{array}{ll}
+    raining & \frac{1}{15} \sum_{t-15:t} \sum_{i} m_{i, t} \ge \epsilon \\
+    dry     & \frac{1}{15} \sum_{t-15:t} \sum_{i} m_{i, t} \lt \epsilon
+\end{array}
+\right.
+$$
+
+Now, we can easily assign arbitrary timesteps $t$ "event ids". Let's visualize a subset of our set, now segmented into synthetic rainfall "events". Here, the x-axis corresponds to timesteps $t$, and the y-axis is the sum of MRMS 1H-QPE for all rain-gauges, $\sum_{i} m_{i, t}$.
+
+![](assets/seg.png)
 
 ##### Training a random forest model
 
