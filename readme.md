@@ -132,11 +132,16 @@ Where `ccrfcd_gauge_deltas_*.csv` files contain aligned MRMS/CCRFCD data.
 
 ### Methodology
 
-> *Follow along with the subsequent sections in the `analysis.ipynb` notebook.*
+> *You can follow along with the following sections in the `analysis.ipynb` notebook.*
 
+##### Synthetic rain 'event' construction
 
+Recall, so far we've only collected a corpus of days (i.e., 24H) periods for which at least *some* rainfall occured. But real-life rainfall events can occur over multiple days, and may only last a few hours at a time. Therefore, we'll need to stich together our data into one, continous timeseries. Next, we'll segment this timeseries into individual rainfall events for *event-driven* analysis.
+
+##### Training a random forest model
 
 ### Conclusions
 
 ### Acknowledgements
----
+
+A huge thanks to the **UNITES** group at UNC Chapel Hill for lending valuable computing resources to this project.
