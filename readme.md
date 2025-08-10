@@ -95,7 +95,7 @@ Let's break down each of these columns:
 - `mrms_qpe`: **(inches)** cummulative rainfall recorded by MRMS radar-only product between `start_time`/`end_time` at `lat`/`lon`
     - Value for *the **nearest** MRMS grid-cell* to `lat`/`lon`
 
-Note that we've taken extra care to convert the CCRFCD gauge timesteps from PDT->UTC.
+Note that we've taken extra care to convert the CCRFCD gauge timesteps from PDT->UTC. Also, we've deliberately **removed rows** in this table where `gauge_qpe` and `mrms_qpe` are 0.0. Full per-day `csv` files can be found in the `data/events` directory, which we will explore in greater detail down below.
 
 ##### Enviornmental data
 
