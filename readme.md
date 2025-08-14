@@ -176,11 +176,18 @@ $$
 \right.
 $$
 
-Now, we can easily assign arbitrary timesteps $t$ "event ids". Let's visualize a subset of our set, now segmented into synthetic rainfall "events". Here, the x-axis corresponds to timesteps $t$, and the y-axis is the sum of MRMS 1H-QPE for all rain-gauges, $\sum_{i} m_{i, t}$.
+Now, we can easily assign arbitrary timesteps $t$ "event ids". Let's visualize a subset of our dataset, now segmented into individual rainfall "events". Here, the x-axis corresponds to timesteps $t$, and the y-axis is the sum of MRMS 1H-QPE for all rain-gauges, $\sum_{i} m_{i, t}$.
 
 ![](assets/seg.png)
 
 ##### Training a random forest model
+
+Recall that the main objective of our study is to uncover the *key factors* that modulate so-called "rain gauge bias". One way to probe the relative importance of various features is to first train a model to predict MRMS 1HR-QPE, and next to perform a **permutation test**. In this study, we train a random forest model $f_\theta(X_{t, i}) \aprox y_{t, i}$, where $X_{t, i}$ is an array of features that include rain gauge 1H-QPE, and $y_{t, i}$ is the MRMS 1H-QPE for a timestep $t$ and gauge index $i$. Using the data we collected in the sections above, including rain event "ids" and enviornmental information, we can generate a fairly detailed training set for our model. Let's look at a training sample below.
+
+- [training sample df row]
+- [list of features]
+
+We choose to use a random forest model for several reasons. First, we get to leverge the power of machine learning to *learn patterns from data*, allowing us to make accurate predictions without introducing inductive biases. Second, RF models are fast and intertable; they are both easy to train and interogate.
 
 ### Conclusions
 
