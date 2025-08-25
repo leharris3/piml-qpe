@@ -70,6 +70,8 @@ xarr: xarray.Dataset = client.fetch_radar_only_qpe_full_day_1hr(date, del_tmps=T
 
 ##### MRMS/CCRFCD data alignment
 
+![assets/mrms_viz.png](assets/mrms_viz.png)
+
 We bring everything together in the script at `scripts/gather_all_events.py`, which is responsible for generating a unified dataset of MRMS radar-only 1H-QPE and CCRFCD rain-gauge 1H-QPE data. Let's briefly walk through the steps to generate this dataset.
 
 For each unique day (i.e., 00:00:00-23:59:59 UTC window) from [01/01/21] to [07/25/25], select days during which the following criteria are met.
