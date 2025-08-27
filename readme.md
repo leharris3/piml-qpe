@@ -14,6 +14,8 @@ To systematically probe the questions above, we set out to conduct a large-scale
 
 ##### *CCRFCD rain-gauge values*
 
+![assets/4229-ccrfcd-rain-gauge.jpg](assets/4229-ccrfcd-rain-gauge.jpg)
+
 - Data source: [https://gustfront.ccrfcd.org/gagedatalist/](https://gustfront.ccrfcd.org/gagedatalist/)
 
 We scraped data for 223 CCRFCD rain-gauges between the dates of [1/1/2020-7/26/25] using the script in `scripts/scrape_gustfront_v2.py` to crawl the Gustfront website. For each rain-gauge id in `data/7-23-25-scrape`, we select `interval=None` and `rawValues=False`. The resulting `csv` files have the following format:
@@ -184,7 +186,7 @@ Now, we can easily assign arbitrary timesteps $t$ "event ids". Let's visualize a
 
 ##### Training a random forest model
 
-Recall that the main objective of our study is to uncover the *key factors* that modulate so-called "rain gauge bias". One way to probe the relative importance of various features is to first train a model to predict MRMS 1HR-QPE, and next to perform a **permutation test**. In this study, we train a random forest model $f_\theta(X_{t, i}) \aprox y_{t, i}$, where $X_{t, i}$ is an array of features that include rain gauge 1H-QPE, and $y_{t, i}$ is the MRMS 1H-QPE for a timestep $t$ and gauge index $i$. Using the data we collected in the sections above, including rain event "ids" and enviornmental information, we can generate a fairly detailed training set for our model. Let's look at a training sample below.
+Recall that the main objective of our study is to uncover the *key factors* that modulate so-called "rain gauge bias". One way to probe the relative importance of various features is to first train a model to predict MRMS 1HR-QPE, and next to perform a **permutation test**. In this study, we train a random forest model $f_\theta(X_{t, i}) \approx y_{t, i}$, where $X_{t, i}$ is an array of features that include rain gauge 1H-QPE, and $y_{t, i}$ is the MRMS 1H-QPE for a timestep $t$ and gauge index $i$. Using the data we collected in the sections above, including rain event "ids" and enviornmental information, we can generate a fairly detailed training set for our model. Let's look at a training sample below.
 
 - [training sample df row]
 - [list of features]
