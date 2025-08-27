@@ -1,4 +1,5 @@
 MRMS_1H_QPE_PALLETE = [
+    "#FFFFFF",
     "#DBD8F8",
     "#C0B9FF",
     "#8A7DFD",
@@ -26,6 +27,7 @@ MRMS_1H_QPE_PALLETE = [
 ]
 
 MRMS_1H_QPE_BOUNDARIES = [
+    0.00,
     0.01,
     0.05,
     0.10,
