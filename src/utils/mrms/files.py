@@ -1,4 +1,5 @@
 import gzip
+import eccodes
 import shutil
 import xarray as xr
 
@@ -12,7 +13,12 @@ class Grib2File:
         assert self.path.suffix == ".grib2"
 
     def to_xarray(self, engine="cfgrib") -> xr.Dataset:
-        return xr.open_dataset(str(self.path), engine="cfgrib")
+        """
+        WARNING: very slow
+        """
+
+        
+        return xr.open_dataset(str(self.path), chunks="auto",)
 
 
 class ZippedGrib2File:

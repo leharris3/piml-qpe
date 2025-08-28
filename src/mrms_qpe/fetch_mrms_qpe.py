@@ -38,6 +38,9 @@ def _process_single_file(fp: str, to_dir: str) -> xr.Dataset:
 
 
 class MRMSQPEClient:
+    """
+    Wrapper for the MRMS AWS bucket; specifically for fetching 1H Radar-Only QPE.
+    """
 
     def __init__(self):
         self.mrms_client = MRMSAWSS3Client()
@@ -108,6 +111,7 @@ class MRMSQPEClient:
         ---
         """
 
+        # TODO: add support for many, many timezones by using an existing library
         # HACK: PDT -> UTC
         if time_zone == "PDT":
             end_time += timedelta(hours=7)
@@ -129,8 +133,9 @@ class MRMSQPEClient:
         
         # TODO: del grib2 files after download
         mp = MRMSPath.from_str(nearest_path)
+
+        # current pipeline: download -> unzip -> convert to xarray -> cleanup
         fp = self.mrms_client.download(str(mp), to=to_dir)
-        
         zipped_gf = ZippedGrib2File(fp)
         gf        = zipped_gf.unzip(to_dir=to_dir)
         xa        = gf.to_xarray()
@@ -213,10 +218,17 @@ class MRMSQPEClient:
         """
         return self._fetch_radar_only_qpe_x(end_time, MRMSProductsEnum.RadarOnly_QPE_15M, mode=mode, time_zone=time_zone)
     
-    def fetch_radar_only_qpe_1hr(self, end_time: datetime, mode="nearest", time_zone="UTC"):
+    def fetch_radar_only_qpe_1hr(self, end_time: datetime, mode="nearest", time_zone="UTC") -> xr.Dataset | None:
         """
         **Time Zone**: ``UTC``
         - Fetch ``end_time-1:00``-``end_time``
+
+        Params
+        ---
+        - :end_time:
+        - :mode: {"nearest", "first"} 
+            - When an MRMS product is unavailable for specified `end_time`, how we select the next closest item.
+        - :time_zone: {"UTC", "PDT", "PST"}; default: "UTC"
         """
         return self._fetch_radar_only_qpe_x(end_time, MRMSProductsEnum.RadarOnly_QPE_01H, mode=mode, time_zone=time_zone)
 
