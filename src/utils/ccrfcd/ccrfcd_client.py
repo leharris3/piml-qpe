@@ -39,7 +39,7 @@ class Location:
 
 class CCRFCDClient:
 
-    _METADATA_FP    = "data/clark-county-rain-gauges/ccrfcd_rain_gauge_metadata.csv"
+    _METADATA_FP    = "data/ccrfcd_rain_gauge_metadata.csv"
     _GAUGE_DATA_DIR = "data/7-23-25-scrape"
 
     # state of nevada
@@ -127,7 +127,7 @@ class CCRFCDClient:
         # end_idx    = df.index.get_indexer([end_time],   method='nearest')[0]
         # cum_precip = df.iloc[end_idx:start_idx+1]['delta'].sum()
 
-        cum_precip = df.loc[end_time:start_time]['delta'].sum()
+        cum_precip = df.loc[end_time:start_time]['delta'][:-1].sum()
         return location, float(cum_precip), gauge_id
 
     def _fetch_all_gauge_qpe(self, start_time: datetime, end_time: datetime, timezone="UTC", disable_tqdm=False) -> List[Dict]:
