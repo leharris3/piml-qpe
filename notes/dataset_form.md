@@ -1,18 +1,7 @@
-# Dataset QC
+# **Dataset creation**
 ---
 
-## TODO
-
-### Alignment
-
-- [x] 1. compare PDT/PST events; radar loops
-    - [x] 1a. make a gif/radar loop for *any* event
-    - [x] 1b. rewrite the mrms, data-fetching backend
-    - [x] 1c. improve gauge visualization (i.e., no disappearing gauges, better rg icons) ]
-    - [x] 1d. add a "top gauges" panel, showing the current top-4 rain gauges and their vals
-- [ ] 2. 
-
----
+### Definitions
 
 - Timescales
     - $t \in \mathcal{T}_{MRMS}$: timestep in MRMS dataset
@@ -22,23 +11,22 @@
     > *A fundamnetal problem is that the MRMS and CCRFCD datasets are on different timescales, meaning temporal alignment is required*
 
 - MRMS dataset
-    - dims: lat, lon, time
-    - $MRMS_{t} \in \real^3$
+    - dims: lattitude $(H)$, lon $(W)$, time
+    - $MRMS_{t} \in \mathbb{R}^{H \times W}$
     - $MRMS_{t} = \{mrms_{0, 0}, ..., mrms_{i, j}\}$
 
 - CCRFCD dataset
     - dims: gauge_idx, time
-    - $k \in \{0, ..., o\}$: set of *unique* rain gauge indices
-    - $\mathcal{I}_k = (lat, lon)$: rain guage locations
+    - $\mathcal{I}_k = (lat, lon)$: rain guage location
+        - $k \in \{0, ..., o\}$: element in set of *unique* rain gauge indices
     - $\mathcal{G}_u = \{g_0, ..., g_p \}$: dataset of historical rain accumulation
 
 - Aligned dataset
     - dims: gauge_idx, source (MRMS/CCRFCD), time
-    - We want to generate a dataset $\mathcal{D} \in \real^3$ where for a timestep $t$ and gauge index $k$...
+    - We want to generate a dataset $\mathcal{D} \in \mathbb{R}^{I \times 2 \times \mathcal{T}_{MRMS}}$ where for a timestep $t$ and gauge index $k$...
         - $D_{t, k} = ( MRMS_{t, \mathcal{I}_k}, \mathcal{G}_{t, k} )$
-        - *But what if $k \notin \mathcal{T}_{MRMS}$?*
 
-##### Generating an aligned dataset
+### Generating an aligned dataset
 
 1. Aggregate rain gauge raw data (i.e., bucket tips) into a ***sparse*** table with timestep index $\mathcal{T}_{CCRFCD}$
     - Why is this table "sparse"?
@@ -51,26 +39,43 @@
 | 4 | 2025-03-03-07:03 | -7 | 2025-03-03-14:03 | 3.5 |
 | 4 | 2025-03-03-07:35 | -7 | 2025-03-03-14:35 | 3.6 |
 
-2. Generate a ***dense*** table from `1` with a timestep index of $\mathcal{T}_{MRMS}$
-    - > $\forall_{t \in \mathcal{T}_{MRMS}} \forall_{k \in \mathcal{I}} \exists $ *row in datatable*
-    - 2a. $\forall_{t \in \mathcal{T}_{MRMS}} \forall_{k \in \mathcal{I}}$ ...
-        - Lookup rows for $k$ between $[t_{start}, t_{end}]$
+2. select $\mathcal{T}_{MRMS}$; i.e., determine which MRMS 1H-QPE timesteps to download
+    - LV valley: (35.8, 36.4 / -115.4, -114.8)
+    - 1 1km $\times$ 1km grid-cell in the LV valley >= 0.25 in. 1H QPE in a 24H period (i.e., 00:00-23:59 UTC)
 
-| gauge-idx | start-datetime-utc | end-datetime-utc | val |
+3. Generate a ***dense*** table from `1` with a timestep index of $\mathcal{T}_{MRMS}$
+- > $\forall_{t \in \mathcal{T}_{MRMS}} \forall_{k \in \mathcal{I}} \exists $ *row in datatable*
+
+- 3a. $\forall_{t \in \mathcal{T}_{MRMS}} \forall_{k \in \mathcal{I}}$ ...
+    - Lookup rows for $k$ between $[t_{start}, t_{end}]$
+    - Calculate the *sum* of **positive** differences only
+        - e.g., `[1, 1.2, 0.0, 0.3] -> [NaN, 0.2, NaN, 0.3] -> 0.5`
+        - Rain gauges occasionally *reset*; negative rainfall amounts are impossible
+
+| gauge-idx | start-datetime-utc | end-datetime-utc | gauge-1h-acc |
 | :---: | :---: | :---: | :---: |
-| 4 | 2025-03-03-14:00 | 2025-03-03-15:00 | 3.5 |
-| 4 | 2025-03-03-14:02 | 2025-03-03-15:02 | 3.5 |
-| 4 | ... | 3.5 |
-| 4 | 2025-03-03-14:30 | 2025-03-03-15:30 | 3.6 |
+| 4 | 2025-03-03-14:00 | 2025-03-03-15:00 | 0.1 |
+| 4 | 2025-03-03-14:02 | 2025-03-03-15:02 | 0.2 |
+| 4 | ... | ... | ... |
+| 4 | 2025-03-03-14:30 | 2025-03-03-15:30 | 0.1 |
 | 5 | 2025-03-03-14:30 | 2025-03-03-15:30 | `NaN` |
 
-3. select $\mathcal{T}_{MRMS}$; i.e., determine which MRMS 1H-QPE timesteps to download
-    - previous hueristic:
-        - 1 1kmx1km grid-cell in the LV valley exceeded .25 1H QPE at some point in a 24H period
-            - TODO: confirm
-    - a smarter approach may be: download MRMS data based on CCRFCD data-coverage
-        - generate table in `1.`
-        - for every hour in 2021-2025 (step=2 minutes)...
+4. Append MRMS 1H QPE; $\forall_{t \in \mathcal{T}_{MRMS}} \forall_{k \in \mathcal{I}}$
+    - 4a. Get gauge location: $\mathcal{I}_k = (lat, lon)$
+    - 4b. Find nearest MRMS grid-cell to rain gauge $k' = (lat', lon') \approx (lat, lon)$
+    - 4c. Get $MRMS_{t, k'}$; append to aligned dataset $D$
+        - $D_{t, k, mrms} = $ $ MRMS_{t, k'} \over{25.4} $
+        - > *Note: we divide by 25.4 to convert MRMS data from millimeters to inches*
+
+| gauge-idx | start-datetime-utc | end-datetime-utc | gauge-1h-acc | mrms-1h-qpe |
+| :---: | :---: | :---: | :---: | :---: |
+| 4 | 2025-03-03-14:00 | 2025-03-03-15:00 | 0.1 | 0.13 |
+| 4 | 2025-03-03-14:02 | 2025-03-03-15:02 | 0.2 | 0.19 |
+| 4 | ... | ... | ... | ... |
+| 4 | 2025-03-03-14:30 | 2025-03-03-15:30 | 0.1 | 0.25 |
+| 5 | 2025-03-03-14:30 | 2025-03-03-15:30 | `NaN` | 0.08 |
+
+- > *Note: we should have `mrms-1h-acc` values for all rows in this dataset, but not necessarily `gauge-1h-acc` values*
 
 ##### Daylight Saving's Time
 
