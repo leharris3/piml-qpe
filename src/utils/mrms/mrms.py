@@ -218,6 +218,8 @@ class MRMSAWSS3Client:
 
         result = subprocess.run(cmd, capture_output=True, text=True)
         if result.returncode != 0:
+            from pprint import pprint
+            pprint(f"Command failed to execute: {cmd}")
             raise RuntimeError(
                 f"Download failed:\nSTDOUT: {result.stdout}\nSTDERR: {result.stderr}"
             )
