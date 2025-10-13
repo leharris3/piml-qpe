@@ -91,6 +91,36 @@
 | 2024 | 11 | 3 | 2:00 AM | UTC−7 -> UTC−8 |
 | 2025 | 3 | 9 | 2:00 AM | UTC−8 -> UTC−7 |
 
-# **Rain Events**
+# **Defining rainfall events**
 
-- 
+- Motivation
+    - We want to construct a model $f_{\theta}(\mathcal{X}_{0}, k, t, \epsilon) = \hat{y}$...
+        - $\mathcal{X}_0$: initial enviornmental state
+        - $k \in \mathcal{I}$: rain gauge index
+        - $t$: event-relative timestep (i.e., time elapsed from start of rainfall event)
+        - $\epsilon$: rain gauge 1h accumulated precip.
+        - $\hat{y} \approx y$: MRMS 1h QPE
+    - ...with the goal of studying the influence of $(X, k, t)$ on $ y - \epsilon$
+
+- Definitions
+    - $ \mathcal{E} $: rainfall events
+        - $ \mathcal{E}_i = \{ t_0,  ..., t_m \}$: a single **event**, where $x$ is a **timestamp** and $x_i \lt x_{i+1}$
+        - $i \in \{0, ..., n \}$: set of unique rainfall event **indicies**
+        - $t \in \{0, ..., m \}$": set of *event-relative* timesteps for an event $ \mathcal{E}_i$
+
+TODO
+- Map all $(k, x_i) \to (i, t)$, where $i \in \mathcal{E}$ and $t \in \mathcal{E}_i$
+- 1. Segment all unique MRMS end-datetimes $\mathcal{T}_{MRMS}$ into $n$ rainfall events
+    - 1a. Begin by assigning each timestep $u \in \mathcal{T}_{{MRMS}_{j}}$ to a label $l \in \{T, F \}$, where $T$: rainfall event; $F$: non-rainfall event
+    - 1b. Ensure that segments in 1a. have some subjectively 'nice' properties
+        - I. Segments neither too long nor too short; 
+        - II. All moments $t \in \mathcal{E}_i$ are relavent to initial enviornmental conditions $\mathcal{X}_0$
+    - 1c. Read + select a paper to base our selection scheme upon 
+
+| gauge-idx | start-datetime-utc | end-datetime-utc | gauge-1h-acc | mrms-1h-qpe | event_id | t |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| 4 | 2025-03-03-14:00 | 2025-03-03-15:00 | 0.1 | 0.13 | 0 | 0 | 
+| 4 | 2025-03-03-14:02 | 2025-03-03-15:02 | 0.2 | 0.19 | 0 | 1 | 
+| 4 | ... | ... | ... | ... | ... | ... |
+| 4 | 2025-03-03-14:30 | 2025-03-03-15:30 | 0.1 | 0.25 | 0 | n | 
+| 5 | 2025-03-03-14:30 | 2025-03-03-15:30 | `NaN` | 0.08 | 0 | n | 
