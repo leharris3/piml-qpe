@@ -1,6 +1,6 @@
-# **A study of CCRFCD rain-gauge & MRMS QPE alignment**
+# **Developing a data-driven QPE method for the Western US**
 ---
-> *Work completed at the NWS in Las Vegas, NV*
+> *Work completed at NWS Las Vegas, NV*
 
 This repository contains contains data and analysis of MRMS and Clark County Regional Flood Control District (CCRFCD) rain gauge QPE values for January of 2021 through July of 2025.
 
@@ -101,39 +101,6 @@ Let's break down each of these columns:
 
 Note that we've taken extra care to convert the CCRFCD gauge timesteps from PDT->UTC. Also, we've deliberately **removed rows** in this table where `gauge_qpe` and `mrms_qpe` are 0.0. Full per-day `csv` files can be found in the `data/events` directory, which we will explore in greater detail down below.
 
-##### Enviornmental data
-
-- ASOS data source: [https://mesonet.agron.iastate.edu](https://mesonet.agron.iastate.edu)
-
-We aimed to conduct a robust study of *which factors* contribute to rain-gauge bias. Therefore, it was necessary to gather some supplemental enviornmental data. For each day we gathered MRMS/CCRFCD data from, we also collect 0Z and 12Z soundings launched from VEF using the `sounderpy` package. Additionally, we collected ASOS station readings with the following parameters:
-
-- `network`: NV_ASOS
-- `station`:
-    - 05U, 10U, 9BB, AWH, B23, BAM, BJN, BVU, CXP, DRA, EKO, ELY, HND, HTH, INS, LAS, LOL, LSV, MEV, NFL, P38, P68, RNO, RTS, TMT, TPH, U31, VGT, WMC
-- `data`: all
-- `tz`: Etc/UTC
-- `format`: onlycomma
-- `latlon`: yes
-- `elev`: yes
-- `missing`: M
-- `trace`: T
-- `direct`: no
-- `report_type`: 3, 4
-
-##### Raw data
-
-We aggregated all the raw data we've collected so far into the `data/events` folder. This folder is formated like so:
-
-```bash
-YYYY-MM-DD HH:MM:SS
-- YYYY-MM-DD HH:MM:SS_ASOS.csv
-- YYYY-MM-DD HH:MM:SS_VEF_OZ_sounding.json
-- YYYY-MM-DD HH:MM:SS_VEF_1Z_sounding.json
-- ccrfcd_gauge_deltas_YYYY-MM-DD HH:MM:SS.csv
-```
-
-Where `ccrfcd_gauge_deltas_*.csv` files contain aligned MRMS/CCRFCD data.
-
 ### Methodology
 
 > *You can follow along with the following sections in the `analysis.ipynb` notebook.*
@@ -184,17 +151,8 @@ Now, we can easily assign arbitrary timesteps $t$ "event ids". Let's visualize a
 
 ![](assets/seg.png)
 
-##### Training a random forest model
 
-Recall that the main objective of our study is to uncover the *key factors* that modulate so-called "rain gauge bias". One way to probe the relative importance of various features is to first train a model to predict MRMS 1HR-QPE, and next to perform a **permutation test**. In this study, we train a random forest model $f_\theta(X_{t, i}) \approx y_{t, i}$, where $X_{t, i}$ is an array of features that include rain gauge 1H-QPE, and $y_{t, i}$ is the MRMS 1H-QPE for a timestep $t$ and gauge index $i$. Using the data we collected in the sections above, including rain event "ids" and enviornmental information, we can generate a fairly detailed training set for our model. Let's look at a training sample below.
-
-- [training sample df row]
-- [list of features]
-
-We choose to use a random forest model for several reasons. First, we get to leverge the power of machine learning to *learn patterns from data*, allowing us to make accurate predictions without introducing inductive biases. Second, RF models are fast and intertable; they are both easy to train and interogate.
-
-### Conclusions
 
 ### Acknowledgements
 
-A huge thanks to the [**UNITES**](https://tianlong-chen.github.io/index.html#lab) group at UNC Chapel Hill for lending valuable computing resources to this project.
+A big thanks to [**UNITES**](https://tianlong-chen.github.io/index.html#lab) at UNC Chapel Hill for lending valuable computing resources to this project.
