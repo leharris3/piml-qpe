@@ -3,11 +3,14 @@ __old__
 __temp__
 __temp
 
-data/**
-cases-studies
-notebooks/hrrr-analysis-test
+data/___checkpoints___
+data/events
+data/soundings-asos
+data/hrrr-env
+data/ccrfcd-gauges-raw-data-7-23-25
+data/2021-01-01_2025-07-25.csv
 
-data/events/2021-01-01_2025-07-25_all_events.csv
+notebooks/hrrr-analysis-test
 
 **.grib2
 **.idx
