@@ -16,3 +16,6 @@ notebooks/hrrr-analysis-test
 **.grib2
 **.idx
 **.gz
+
+_copy_log.out
+**.out
