@@ -1,6 +1,6 @@
-# **Developing a data-driven QPE method for the Western US**
+# **PI-ML QPE for the western CONUS**
 ---
-> *Work completed at NWS Las Vegas, NV*
+> *NOTE: this is work in-progress.*
 
 This repository contains contains data and analysis of MRMS and Clark County Regional Flood Control District (CCRFCD) rain gauge QPE values for January of 2021 through July of 2025.
 
@@ -138,11 +138,11 @@ Now, let's be a little more formal. Let $r_i \in \mathcal{R}$  be a rain gauge i
 
 Furthermore, let $\epsilon = Q_{50}(\forall_{t}\sum_{i}m_{i, t}) \approx 0.145$ be the decision point we choose to toggle a rainfall "event"; the 50th percentile of the sum of MRMS 1H-QPE values at a timestep $t$. Next, for all timesteps $t$, we classify $t$ to be
 
-$$ 
+$$
 \left\{
 \begin{array}{ll}
-    raining & \frac{1}{15} \sum_{t-15:t} \sum_{i} m_{i, t} \ge \epsilon \\
-    dry     & \frac{1}{15} \sum_{t-15:t} \sum_{i} m_{i, t} \lt \epsilon
+    \text{raining} & \frac{1}{15} \sum_{t-15:t} \sum_{i} m_{i, t} \ge \epsilon \\
+    \text{dry}     & \frac{1}{15} \sum_{t-15:t} \sum_{i} m_{i, t} \lt \epsilon
 \end{array}
 \right.
 $$
