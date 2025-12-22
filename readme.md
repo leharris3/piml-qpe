@@ -2,6 +2,8 @@
 ---
 > *NOTE: this is work in-progress.*
 
+[![HuggingFace](https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg)](https://huggingface.co/datasets/leharris3/ccrfcd-mrms-hrrr-env-2021-2025)
+
 This repository contains contains data and analysis of MRMS and Clark County Regional Flood Control District (CCRFCD) rain gauge QPE values for January of 2021 through July of 2025.
 
 ### Background & motivation
