@@ -13,6 +13,7 @@ data/ccrfcd-gauges-raw-data-7-23-25
 data/2021-01-01_2025-07-25.csv
 data/2021-01-01_2025-07-25_hrrr_env.csv
 data/2021-01-01_2025-07-25_hrrr_env_v2.csv
+data/2021-01-01_2025-07-25_hrrr_env_v3.csv
 
 notebooks/hrrr-analysis-test
 scripts/hrrr_env_rows.json
