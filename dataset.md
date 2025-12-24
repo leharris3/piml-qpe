@@ -6,25 +6,45 @@
 
 ### Dataset
 
-| variable | units | notes |
-| ---:    | :---: | :---: |
-| `gauge_idx`          | ---       | gauge identifier |
-| `start_datetime_utc` | `datetime`| |
-| `end_datetime_utc`   | `datetime`| |
-| `gauge_acc_in`       | inch/hr   | CCRFCD rain gauge 1H accumulation |
-| `mrms_q3evap_qpe`    | inch/hr   | MRMS Q3 evaporation-adjusted QPE |
-| `lat`                | degrees   | latitude |
-| `lon`                | degrees   | longitude |
-| `700mb_UGRD`         | m/s       | `u` component of wind at 700mb |
-| `700mb_VGRD`         | m/s       | `v` component of wind at 700mb |
-| `850_700_mean_wind`  | m/s       | mean wind speed in 850-700mb layer |
-| `850mb_DPT`          | K         | dewpoint temperature at 850mb |
-| `850mb_500mb_DPT`    | K         | dewpoint (mean) |
-| `LCL_LFC_RH`         | %         | relative humidity between LCL and LFC |
-| `0-3km_RH`           | %         | 0-3 km (mean) relative humidity |
-| `0-5km_RH`           | %         | 0-5 km (mean) relative humidity |
-| `DCAPE`              | J/kg      | downdraft convective available potential energy |
-| `low_level_lapse_rate` | K/km    | low-level temperature lapse rate |
-| `3hr_lapse_rate_change` | K/km   | 3-hour change in lapse rate |
-| `sfc_850_pw`         | mm        | precipitable water, surface to 850mb |
-| `sfc_700_pw`         | mm        | precipitable water, surface to 700mb |
+|                                             variable |   units    |                                            source                                             | notes                                 |
+| ---------------------------------------------------: | :--------: | :-------------------------------------------------------------------------------------------: | :------------------------------------ |
+|                                          `gauge_idx` |    –––     |                       [CCRFCD](https://gustfront.ccrfcd.org/gaugemap/)                        |                                       |
+|                                 `start_datetime_utc` | `datetime` |                                              –––                                              |                                       |
+|                                   `end_datetime_utc` | `datetime` |                                              –––                                              |                                       |
+|                                       `gauge_acc_in` |  inch/hr   |                       [CCRFCD](https://gustfront.ccrfcd.org/gaugemap/)                        | rain gauge 1H accumulation            |
+|                                    `mrms_q3evap_qpe` |  inch/hr   |                     [MRMS](https://registry.opendata.aws/noaa-mrms-pds/)                      | MRMS opperational 1H radar-only QPE   |
+|                                                `lat` |  degrees   |                       [CCRFCD](https://gustfront.ccrfcd.org/gaugemap/)                        | rain-gauge latitude                   |
+|                                                `lon` |  degrees   |                       [CCRFCD](https://gustfront.ccrfcd.org/gaugemap/)                        | rain-gauge longitude                  |
+|                                         `700mb_UGRD` |    m/s     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  | `u` component of wind                 |
+|                                         `700mb_VGRD` |    m/s     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  | `v` component of wind                 |
+|                                  `850_700_mean_wind` |    m/s     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|                                       `surface_PRES` |     Pa     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                          `850mb_HGT` |    gpm     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                          `700mb_HGT` |    gpm     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|      `highest_tropospheric_`<br>`freezing_level_HGT` |     m      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+| `level_of_adiabatic_`<br>`condensation_from_sfc_HGT` |    gpm     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                `2m_above_ground_TMP` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                          `850mb_TMP` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                          `700mb_TMP` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                          `500mb_TMP` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                `2m_above_ground_DPT` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                          `925mb_DPT` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                          `850mb_DPT` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                          `700mb_DPT` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                          `500mb_DPT` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                    `925mb_700mb_DPT` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|                                    `850mb_700mb_DPT` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|                                    `850mb_500mb_DPT` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|                                    `surface_theta_e` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|               `lowest_100mb_mean_`<br>`mixing_ratio` |    –––     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|                                         `LCL_LFC_RH` |     %      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* | relative humidity between LCL and LFC |
+|                                           `0-3km_RH` |     %      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* | 0-3 km (mean) relative humidity       |
+|                                           `0-5km_RH` |     %      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* | 0-5 km (mean) relative humidity       |
+|                                              `DCAPE` |    J/kg    | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|                               `low_level_lapse_rate` |    K/km    | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|                              `3hr_lapse_rate_change` |    K/km    | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|                                         `sfc_850_pw` |     mm     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* | pwat, surface to 850mb                |
+|                                         `sfc_700_pw` |     mm     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* | pwat, surface to 700mb                |
+|          `entire_atmosphere_`<br>`single_layer_PWAT` |  kg/m$^2$  | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |                      |
+
+\**Fields derived from Zarr HRRR*
