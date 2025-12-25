@@ -36,7 +36,8 @@
 |                                    `850mb_700mb_DPT` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
 |                                    `850mb_500mb_DPT` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
 |                                    `surface_theta_e` |     K      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
-|               `lowest_100mb_mean_`<br>`mixing_ratio` |    –––     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|               `lowest_100mb_mean_`<br>`mixing_ratio` |   ratio    | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
+|                                         `LCL_height` |     m      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
 |                                         `LCL_LFC_RH` |     %      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* | relative humidity between LCL and LFC |
 |                                           `0-3km_RH` |     %      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* | 0-3 km (mean) relative humidity       |
 |                                           `0-5km_RH` |     %      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* | 0-5 km (mean) relative humidity       |
@@ -45,6 +46,7 @@
 |                              `3hr_lapse_rate_change` |    K/km    | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* |                                       |
 |                                         `sfc_850_pw` |     mm     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* | pwat, surface to 850mb                |
 |                                         `sfc_700_pw` |     mm     | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)* | pwat, surface to 700mb                |
-|          `entire_atmosphere_`<br>`single_layer_PWAT` |  kg/m$^2$  | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |                      |
+|          `entire_atmosphere_`<br>`single_layer_PWAT` |   kg/m^2   | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
+|                                               `CWCD` |     m      | [HRRR Zarr](https://mesowest.utah.edu/html/hrrr/zarr_documentation/html/zarr_variables.html)  |                                       |
 
 \**Fields derived from Zarr HRRR*

@@ -16,6 +16,10 @@ data/2021-01-01_2025-07-25_hrrr_env_v2.csv
 data/2021-01-01_2025-07-25_hrrr_env_v3.csv
 data/2021-01-01_2025-07-25_hrrr_env_v4.csv
 data/2021-01-01_2025-07-25_hrrr_env_final.csv
+data/2021-01-01_2025-07-25_hrrr_env_final_v1.csv
+data/2021-01-01_2025-07-25_hrrr_env_final_v2.csv
+data/2021-01-01_2025-07-25_hrrr_env_final_v3.csv
+data/2021-01-01_2025-07-25_hrrr_env_final_v4.csv
 
 notebooks/hrrr-analysis-test
 scripts/hrrr_env_rows.json
