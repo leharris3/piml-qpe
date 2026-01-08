@@ -4,9 +4,9 @@
 
 [![Hugging Face Dataset](https://img.shields.io/badge/Hugging%20Face-Dataset-FFD21E?logo=huggingface&logoColor)](https://huggingface.co/datasets/leharris3/ccrfcd-mrms-hrrr-env-2021-2025)
 
-This is the official repository for an ML Quantitative Precipitation Estimation (ML-QPE) algorithm and accompanying dataset developed in collaboration with the National Weather Service, the University of Oklahoma, the University of Iowa, and the University of North Carolina Chapel Hill.
+*This is the official repository for an ML Quantitative Precipitation Estimation (ML-QPE) algorithm and accompanying dataset developed in collaboration with the National Weather Service, the University of Oklahoma, the University of Iowa, and the University of North Carolina Chapel Hill.*
 
-The following readme will introduce the major components of this codebase, including:
+The following `readme` introduces the major components of this codebase, including:
 
 1. 2021-2025 MRMS QPE dataset
     - 1M+ samples
@@ -18,7 +18,9 @@ The following readme will introduce the major components of this codebase, inclu
 
 \*In development
 
-### Dataset quickstart
+***
+
+## Dataset quickstart
 
 Download from **Hugging Face**.
 
@@ -33,6 +35,8 @@ from datasets import load_dataset
 dataset = load_dataset("leharris3/ccrfcd-mrms-hrrr-env-2021-2025")
 df = dataset['train'].to_pandas()
 ```
+
+![/assets/hrrr-analysis](/assets/hrrr-analysis.gif)
 
 ### Acknowledgements
 
