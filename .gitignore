@@ -5,6 +5,8 @@ __temp__
 __temp
 __data
 
+**.DS_Store
+
 data/___checkpoints___
 data/events
 data/soundings-asos
