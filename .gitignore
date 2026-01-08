@@ -1,7 +1,11 @@
 ___old___
 __old__
 __temp__
+
 __temp
+__data
+
+**.DS_Store
 
 data/___checkpoints___
 data/events
@@ -9,9 +13,15 @@ data/soundings-asos
 data/hrrr-env
 data/ccrfcd-gauges-raw-data-7-23-25
 data/2021-01-01_2025-07-25.csv
+data/2021-01-01_2025-07-25_hrrr_env**.csv
 
 notebooks/hrrr-analysis-test
+scripts/hrrr_env_rows.json
 
 **.grib2
 **.idx
 **.gz
+
+_copy_log.out
+**.out
+**.json
